@@ -1,4 +1,4 @@
-import { checkMail, checkName } from "@/DataFetch/fetchUsers";
+import { checkMail, checkName } from "@/utils/fetchUsers";
 import * as yup from "yup";
 
 /**
@@ -21,5 +21,10 @@ export const userSchema = yup.object().shape({
   password: yup
     .string()
     .min(6, "Password must be at least 6 characters")
+    .max(15, "Password must be at most 15 characters")
+    .matches(
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,15}$/,
+      "Password must contain at least one uppercase letter, one lowercase letter, and one number"
+    )
     .required("Password is required"),
 });

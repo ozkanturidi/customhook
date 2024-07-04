@@ -1,5 +1,5 @@
 "use client";
-import { userSchema } from "@/Validation/userschema";
+import { userSchema } from "@/Schemas/userschema";
 import { Box, Button, FormControl, TextField, Typography } from "@mui/material";
 import useForm from "../CustomHooks/useForm";
 
@@ -66,7 +66,7 @@ export default function Home() {
             width: "400px",
           }}
         >
-          <Typography variant="h4" align="center">
+          <Typography variant="h3" align="center">
             Register Form
           </Typography>
 
@@ -99,31 +99,36 @@ export default function Home() {
         </Box>
       </form>
       <section className="w-[500px]">
-        <h3 className="text-5xl font-bold mb-9">Form criterias</h3>
+        <h3 className="text-5xl font-bold mb-9">Form Criterias</h3>
         <ul className="list-disc list-inside text-xl flex flex-col gap-2">
           <li className="list-item">
-            <span className="text-red-500 font-bold">Name:</span> required and
-            unique{" "}
+            <span className="text-red-500 font-bold">Name:</span> must be
+            required and unique
             <p>
-              names already in usage:
+              <span className="text-blue-500">Names already in usage:</span>
               <span className="text-xl font-bold">
                 &nbsp; Leanne Graham, Ervin Howell etc
               </span>
             </p>
           </li>
           <li className="list-item">
-            <span className="text-red-500 font-bold">Email:</span> required,
-            email format and unique
+            <span className="text-red-500 font-bold">Email:</span> must be
+            required, unique and valid
             <p>
-              emails already in usage:
+              <span className="text-blue-500"> Emails already in usage:</span>
+
               <span className="text-xl font-bold">
                 &nbsp; Sincere@april.biz, Shanna@melissa.tv
               </span>
             </p>
           </li>
           <li className="list-item">
-            <span className="text-red-500 font-bold">Password:</span> required,
-            min 6 characters passwords already in usage: &#128522;
+            <span className="text-red-500 font-bold">Password:</span> must be
+            required and min 6 characters
+            <p>
+              <span className="text-blue-500">Passwords already in usage:</span>
+              &#128522;
+            </p>
           </li>
         </ul>
       </section>
