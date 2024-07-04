@@ -1,36 +1,88 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Task 2: Custom Hook for Form Validation
 
-## Getting Started
+## Objective
 
-First, run the development server:
+Create a custom React hook for form validation that can be reused across different forms in a Next.js application.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## Requirements
+
+- The hook should accept an initial form state and a validation schema.
+- Implement validation using a library like Yup or a custom validation function.
+- The hook should return the form state, a method to handle input changes, a method to handle form submission, and validation errors.
+- Ensure the hook supports both synchronous and asynchronous validations.
+
+## Steps Taken
+
+1. **Initial Setup**
+
+   - Created an initial form state with fields for `name`, `email`, and `password`.
+   - Defined a validation schema using Yup to handle both synchronous and asynchronous validations.
+
+2. **Custom Hook Implementation**
+
+   - Developed a custom hook `useForm` to manage form state, input changes, form submission, and validation errors.
+
+3. **Validation Logic**
+
+   - Integrated Yup for validation schema to handle complex validation rules.
+   - The custom hook supports both synchronous and asynchronous validations, ensuring robust form handling.
+
+## Custom Hook Code
+
+```typescript
+const useForm = (
+  initialState: { [key: string]: string },
+  validationSchema: any
+) => {
+  const [formState, setFormState] = useState(initialState);
+  const [errors, setErrors] = useState<{ [key: string]: string }>({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormState({
+      ...formState,
+      [name]: value,
+    });
+  };
+
+  const validate = async () => {
+    try {
+      await validationSchema.validate(formState, { abortEarly: false });
+      setErrors({});
+      return true;
+    } catch (validationErrors) {
+      const newErrors: { [key: string]: string } = {};
+      validationErrors.inner.forEach((error: any) => {
+        newErrors[error.path] = error.message;
+      });
+      setErrors(newErrors);
+      return false;
+    }
+  };
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    const isValid = await validate();
+    if (isValid) {
+      Swal.fire({
+        title: "Success!",
+        icon: "success",
+        confirmButtonText: "Thanks",
+      });
+    }
+    setIsSubmitting(false);
+  };
+
+  return {
+    formState,
+    errors,
+    isSubmitting,
+    handleChange,
+    handleSubmit,
+  };
+};
+
+export default useForm;
 ```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.

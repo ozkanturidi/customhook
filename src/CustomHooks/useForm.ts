@@ -1,13 +1,26 @@
 "use client";
-import { useState } from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
 import Swal from "sweetalert2";
 
-const useForm = (initialState: any, validationSchema: any) => {
+/**
+ * useForm Custom Hook - Handles form state, validation, and submission
+ * @param {Object} initialState - Initial form state
+ * @param {Object} validationSchema - Validation schema
+ * @returns {Object} - Form state, errors, isSubmitting, handleChange, handleSubmit
+ */
+const useForm = (
+  initialState: { [key: string]: string },
+  validationSchema: any
+) => {
   const [formState, setFormState] = useState(initialState);
-  const [errors, setErrors] = useState<any>({});
+  const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleChange = (e: any) => {
+  /**
+   * Handle form input change
+   * @param {ChangeEvent<HTMLInputElement>} e - Change event
+   */
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormState({
       ...formState,
@@ -15,13 +28,17 @@ const useForm = (initialState: any, validationSchema: any) => {
     });
   };
 
+  /**
+   * Validate form data
+   * @returns {boolean} - Validation result
+   */
   const validate = async () => {
     try {
       await validationSchema.validate(formState, { abortEarly: false });
       setErrors({});
       return true;
     } catch (validationErrors: any) {
-      const newErrors: any = {};
+      const newErrors: { [key: string]: string } = {};
       validationErrors.inner.forEach((error: any) => {
         newErrors[error.path] = error.message;
       });
@@ -30,14 +47,17 @@ const useForm = (initialState: any, validationSchema: any) => {
     }
   };
 
-  const handleSubmit = async (e: any) => {
+  /**
+   * Handle form submission
+   * @param {FormEvent<HTMLFormElement>} e - Submit event
+   */
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
     const isValid = await validate();
     if (isValid) {
       Swal.fire({
-        title: "Good job",
-
+        title: "You registered successfully!",
         icon: "success",
         confirmButtonText: "Thanks",
       });
