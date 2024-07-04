@@ -57,7 +57,7 @@ const useForm = (
     const isValid = await validate();
     if (isValid) {
       Swal.fire({
-        title: "You registered successfully!",
+        title: "Success!",
         icon: "success",
         confirmButtonText: "Thanks",
       });

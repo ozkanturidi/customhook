@@ -1,4 +1,4 @@
-import { checkMail, checkName } from "@/app/DataFetch/fetchUsers";
+import { checkMail, checkName } from "@/DataFetch/fetchUsers";
 import * as yup from "yup";
 
 /**

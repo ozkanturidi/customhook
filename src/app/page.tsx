@@ -98,14 +98,33 @@ export default function Home() {
           </Button>
         </Box>
       </form>
-      <section>
-        <h3 className="text-4xl font-bold mb-9">Form criterias</h3>
-        <ul className="list-disc list-inside text-xl">
-          <li className="list-item">Name: required and unique</li>
+      <section className="w-[500px]">
+        <h3 className="text-5xl font-bold mb-9">Form criterias</h3>
+        <ul className="list-disc list-inside text-xl flex flex-col gap-2">
           <li className="list-item">
-            email: required, email format and unique
+            <span className="text-red-500 font-bold">Name:</span> required and
+            unique{" "}
+            <p>
+              names already in usage:
+              <span className="text-xl font-bold">
+                &nbsp; Leanne Graham, Ervin Howell etc
+              </span>
+            </p>
           </li>
-          <li className="list-item">password: required, min 6 characters</li>
+          <li className="list-item">
+            <span className="text-red-500 font-bold">Email:</span> required,
+            email format and unique
+            <p>
+              emails already in usage:
+              <span className="text-xl font-bold">
+                &nbsp; Sincere@april.biz, Shanna@melissa.tv
+              </span>
+            </p>
+          </li>
+          <li className="list-item">
+            <span className="text-red-500 font-bold">Password:</span> required,
+            min 6 characters passwords already in usage: &#128522;
+          </li>
         </ul>
       </section>
     </div>
