@@ -23,7 +23,7 @@ export const userSchema = yup.object().shape({
     .min(6, "Password must be at least 6 characters")
     .max(15, "Password must be at most 15 characters")
     .matches(
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,15}$/,
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_])[a-zA-Z\d\W_]{6,15}$/,
       "Password must contain at least one uppercase letter, one lowercase letter, and one number"
     )
     .required("Password is required"),

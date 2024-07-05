@@ -124,7 +124,8 @@ export default function Home() {
           </li>
           <li className="list-item">
             <span className="text-red-500 font-bold">Password:</span> must be
-            required and min 6 characters
+            required, min 6 max 15 characters contain at least one uppercase,
+            one uppercase, one number and one special character
             <p>
               <span className="text-blue-500">Passwords already in usage:</span>
               &#128522;
